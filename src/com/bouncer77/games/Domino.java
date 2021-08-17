@@ -4,22 +4,15 @@ import java.util.*;
 
 public class Domino {
 
-    private Set<DominoPiece> dominoPieceSet;
-    private Set<DominoPiece> playerPieces = new HashSet<>();
-    private Set<DominoPiece> computerPieces = new HashSet<>();
-    private Set<DominoPiece> stockPieces = new HashSet<>();
+    private final List<DominoPiece> dominoPieceSet = generateSetDominoes();
+    private List<DominoPiece> playerPieces = new ArrayList<>();
+    private List<DominoPiece> computerPieces = new ArrayList<>();
+    private List<DominoPiece> stockPieces = new ArrayList<>();
 
     public Domino() {
-        dominoPieceSet = generateSetDominoes();
 
         List<DominoPiece> dominoPieceList = new ArrayList<>(dominoPieceSet);
-        //System.out.println("Original items: ");
-        //System.out.println(dominoPieceList);
-        //System.out.println();
-
         Collections.shuffle(dominoPieceList);
-        //System.out.println("After shuffle");
-        //System.out.println(dominoPieceList);
 
         for (int i = 0; i < dominoPieceList.size(); i++) {
             if (i < 7)
@@ -30,27 +23,28 @@ public class Domino {
                 stockPieces.add(dominoPieceList.get(i));
         }
 
-        System.out.println(printSetDominoes(dominoPieceSet, "DominoPieceSet"));
-        System.out.println(printSetDominoes(playerPieces, "PlayerSet"));
-        System.out.println(printSetDominoes(computerPieces, "ComputerSet"));
-        System.out.println(printSetDominoes(stockPieces, "StockSet"));
+        System.out.println(printDominoes(dominoPieceSet, "DominoPieceSet"));
+        System.out.println(printDominoes(playerPieces, "PlayerSet"));
+        System.out.println(printDominoes(computerPieces, "ComputerSet"));
+        System.out.println(printDominoes(stockPieces, "StockSet"));
 
     }
 
-    public static String printSetDominoes(Set<DominoPiece> dominoPieces, String name) {
+    public static String printDominoes(List<DominoPiece> dominoPieces, String name) {
         return name + ":\n"
                 + "Size: " + dominoPieces.size() + "\n"
                 + dominoPieces + "\n";
     }
 
-    public static Set<DominoPiece> generateSetDominoes() {
+    public static List<DominoPiece> generateSetDominoes() {
         Set<DominoPiece> dominos = new HashSet<>();
         for (int i = 0; i < 7; ++i) {
             for (int j = 0; j < 7; ++j) {
                 dominos.add(new DominoPiece(i, j)); // 28 уникальных фишек
             }
         }
-        return dominos;
+        List<DominoPiece> dominoPieceList = new ArrayList<>(dominos);
+        return dominoPieceList;
     }
 
     @Override
